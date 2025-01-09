@@ -1,11 +1,13 @@
-FROM php:8.1-cli
+# ใช้ base image ของ PHP ที่รองรับ FPM
+FROM php:8.0-fpm
 
-# Copy files into the container
-COPY . /usr/src/app
-WORKDIR /usr/src/app
+# ติดตั้ง PostgreSQL extension
+RUN apt-get update && apt-get install -y libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql
 
-# Expose the port
-EXPOSE 3000
+# คัดลอกไฟล์โค้ดไปยัง container
+COPY . /var/www/html
+WORKDIR /var/www/html
 
-# Command to run the PHP built-in server
-CMD ["php", "-S", "0.0.0.0:3000", "-t", "api/"]
+# สั่งให้ PHP ทำงาน
+CMD ["php-fpm"]
