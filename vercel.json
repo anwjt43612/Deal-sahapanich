@@ -5,6 +5,12 @@
       "runtime": "vercel-php@0.7.3"
     }
   },
+  "builds": [
+    {
+      "src": "Dockerfile",
+      "use": "@vercel/docker"
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
