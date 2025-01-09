@@ -7,10 +7,11 @@ $username = 'postgres.pnhtwpczhtomzrcowaek';  // ชื่อผู้ใช้
 $password = 'anuwatboy10942';  // รหัสผ่านที่คุณได้จาก Supabase
 
 try {
-    // เชื่อมต่อกับ PostgreSQL ผ่าน PDO
+    // เชื่อมต่อฐานข้อมูล PostgreSQL
     $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Database connection successful!";
 } catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
+    echo "Database connection failed: " . $e->getMessage();
 }
 ?>
