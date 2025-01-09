@@ -36,6 +36,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             throw new Exception("Please fill in all required fields.");
         }
 
+        // Set up the PostgreSQL database connection
+        $host = 'aws-0-ap-southeast-1.pooler.supabase.com';  
+        $port = '6543';
+        $dbname = 'postgres';
+        $username = 'postgres.pnhtwpczhtomzrcowaek';
+        $password = 'anuwatboy10942';
+
+        try {
+            $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $username, $password);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            log_error("Database connection failed: " . $e->getMessage());
+            die("Database connection failed: " . $e->getMessage());
+        }
+
         // Prepare and execute SQL statement for inserting data
         $stmt = $pdo->prepare("
             INSERT INTO registrations (first_name, last_name, email, phone, interests, trade_in, trade_model, place, place_details, member_status) 
@@ -45,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Log before executing the query
         log_error("Executing query: INSERT INTO registrations ...");
 
+        // Execute the query
         $stmt->execute([$first_name, $last_name, $email, $phone, $interests, $trade_in, $trade_model, $place, $place_detail, $member_status]);
 
         // Log success message
