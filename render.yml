@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: php-app
+    env: php
+    buildCommand: "composer install"
+    startCommand: "php -S 0.0.0.0:10000 -t /opt/render/project/src"
+    routes:
+      - src: /deal.sahapanich/api/(.*)
+        dest: /deal.sahapanich/api/$1
+      - src: /deal.sahapanich/css/(.*)
+        dest: /deal.sahapanich/public/css/$1
+      - src: /deal.sahapanich/js/(.*)
+        dest: /deal.sahapanich/public/js/$1
+      - src: /deal.sahapanich/images/(.*)
+        dest: /deal.sahapanich/public/images/$1
+      - src: /deal.sahapanich/(.*)
+        dest: /deal.sahapanich/api/$1
